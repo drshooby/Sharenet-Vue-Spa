@@ -64,11 +64,10 @@ Sharenet Vue SPA is a responsive single-page application built with Vue.js. The 
 2. **Install Dependencies**
    ```bash
    # Install frontend dependencies
-   cd frontend
    npm install
 
    # Install backend dependencies
-   cd ../backend
+   cd backend
    npm install
    ```
 
