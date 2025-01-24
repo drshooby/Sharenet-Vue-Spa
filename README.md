@@ -105,7 +105,6 @@ Sharenet Vue SPA is a responsive single-page application built with Vue.js. The 
      ```
    - **Frontend**:
      ```bash
-     cd ../frontend
      npm run serve
      ```
 
@@ -175,3 +174,18 @@ sharenet-vue-spa/
 ## Known Issues and Limitations
 - Due to hardware limitations, I was unable to deploy the application or include Docker configurations.
 - Booking conflicts (e.g., duplicate entries) are not currently handled.
+
+---
+
+## Media
+
+### Spot Prices Page
+![Spot Prices Page](https://github.com/user-attachments/assets/0cd3b231-2ea2-4717-8ac2-6caffd98c291)
+
+
+### Workshops Page
+![Workshops Page](https://github.com/user-attachments/assets/c38d9df5-eafb-403d-a9fa-03c2257723e0)
+
+
+### Contact Us Page
+![Contact Us Page](https://github.com/user-attachments/assets/0602aedb-52b9-4949-bf56-97ad8da0e97e)
