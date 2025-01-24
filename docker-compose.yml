@@ -1,0 +1,42 @@
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql-database
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Mo05e123@  # Root password for MySQL
+      MYSQL_DATABASE: workshops_db       # Database name to create
+      MYSQL_USER: user                   # Non-root user for the database
+      MYSQL_PASSWORD: password           # Password for the non-root user
+    ports:
+      - "3306:3306"                      # Map MySQL's default port
+    volumes:
+      - db-data:/var/lib/mysql           # Persistent storage for MySQL data
+
+  backend:
+    build:
+      context: ./backend                 # Build context for the backend
+      dockerfile: Dockerfile             # Dockerfile for the backend
+    ports:
+      - "5000:5000"                      # Map backend port
+    volumes:
+      - ./backend:/usr/src/app           # Mount backend source code
+    environment:
+      DB_HOST: db                        # Database host (service name in Docker)
+      DB_USER: user                      # Non-root MySQL user
+      DB_PASSWORD: password              # Non-root MySQL password
+      DB_NAME: workshops_db              # Database name
+    depends_on:
+      - db                               # Wait for the db service to be ready
+
+  frontend:
+    build:
+      context: .                         # Build context for the frontend
+      dockerfile: Dockerfile             # Dockerfile for the frontend
+    ports:
+      - "8080:8080"                      # Map frontend port
+    volumes:
+      - .:/usr/src/app                   # Mount frontend source code
+
+volumes:
+  db-data:                               # Persistent volume for MySQL
