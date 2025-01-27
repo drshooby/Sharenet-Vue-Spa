@@ -129,6 +129,20 @@ Sharenet Vue SPA is a responsive single-page application built with Vue.js. The 
 
 ---
 
+## Running with Docker
+1. Ensure Docker is Installed
+Make sure you have Docker and Docker Compose installed.
+
+2. Build and Run the Containers
+Run the following command in the root directory (where docker-compose.yml is located):
+
+```
+docker-compose up --build
+```
+3. Access the Application
+Frontend: http://localhost:8080
+Backend: http://localhost:5000
+
 ## Folder Structure
 
 ```
@@ -172,7 +186,6 @@ sharenet-vue-spa/
 ---
 
 ## Known Issues and Limitations
-- Due to hardware limitations, I was unable to deploy the application or include Docker configurations.
 - Booking conflicts (e.g., duplicate entries) are not currently handled.
 
 ---
