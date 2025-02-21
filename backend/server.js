@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const mysql = require("mysql2");
+require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -12,10 +13,10 @@ app.use(bodyParser.json());
 
 // Configure MySQL connection
 const pool = mysql.createPool({
-    host: "mysql", // Localhost for local MySQL server
-    user: "root",      // Your MySQL username
-    password: "password", // Your MySQL password
-    database: "workshops_db", // The database you just created
+    host: process.env.MYSQL_HOST, // Localhost for local MySQL server
+    user: process.env.MYSQL_USER,      // Your MySQL username
+    password: process.env.MYSQL_PASSWORD, // Your MySQL password
+    database: process.env.MYSQL_DATABASE, // The database you just created
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
@@ -40,7 +41,7 @@ app.post("/api/bookings", (req, res) => {
     }
 
     const query = "INSERT INTO bookings (workshop_id, date, venue) VALUES (?, ?, ?)";
-    
+
     pool.query(query, [workshopId, date, venue], (err, _) => {
         if (err) {
             console.error("Error saving booking:", err);
