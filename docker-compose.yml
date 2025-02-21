@@ -5,11 +5,17 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
+# console.log(process.env.MYSQL_HOST, process.env.MYSQL_USER, process.env.MYSQL_PASSWORD, process.env.MYSQL_DATABASE);
 
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "5000:5000"
     depends_on:
@@ -20,8 +26,10 @@ services:
     image: mysql:8
     container_name: mysql-database
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: workshops_db
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       interval: 5s
