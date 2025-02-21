@@ -21,6 +21,16 @@ const pool = mysql.createPool({
     queueLimit: 0
 });
 
+// Test MySQL connection
+pool.getConnection((err, connection) => {
+    if (err) {
+        console.error('Error connecting to MySQL database:', err);
+        return;
+    }
+    console.log('Connected to MySQL database');
+    connection.release();
+});
+
 // API to save booking
 app.post("/api/bookings", (req, res) => {
     const { workshopId, date, venue } = req.body;
