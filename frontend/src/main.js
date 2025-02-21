@@ -11,7 +11,7 @@ const app = createApp(App);
 app.use(router);
 app.use(VueGoogleMaps, {
   load: {
-    key: "AIzaSyArjSIACQhAdywYFuODlDJeI4_g2-FmxbY",
+    key: process.env.VUE_APP_GOOGLE_MAPS_API_KEY,
     v: "weekly",
   },
 });
