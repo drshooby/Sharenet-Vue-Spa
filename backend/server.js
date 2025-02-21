@@ -11,21 +11,14 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Configure MySQL connection
-const db = mysql.createConnection({
-    host: "localhost", // Localhost for local MySQL server
+const pool = mysql.createPool({
+    host: "mysql", // Localhost for local MySQL server
     user: "root",      // Your MySQL username
-    password: "Mo05e123@", // Your MySQL password
+    password: "password", // Your MySQL password
     database: "workshops_db", // The database you just created
-    port: 3306,        // Default MySQL port
-});
-
-// Connect to MySQL
-db.connect((err) => {
-    if (err) {
-        console.error("Database connection failed:", err.stack);
-        return;
-    }
-    console.log("Connected to MySQL database.");
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
 });
 
 // API to save booking
@@ -37,7 +30,8 @@ app.post("/api/bookings", (req, res) => {
     }
 
     const query = "INSERT INTO bookings (workshop_id, date, venue) VALUES (?, ?, ?)";
-    db.query(query, [workshopId, date, venue], (err, results) => {
+    
+    pool.query(query, [workshopId, date, venue], (err, _) => {
         if (err) {
             console.error("Error saving booking:", err);
             return res.status(500).json({ error: "Database error" });
@@ -48,5 +42,5 @@ app.post("/api/bookings", (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Server listening on http://localhost:${PORT}`);
 });
