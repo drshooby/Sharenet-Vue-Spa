@@ -1,0 +1,35 @@
+name: Build and Push to ECR
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
+
+      - name: Set up Docker Compose
+        uses: KengoTODA/actions-setup-docker-compose@v1
+        with:
+          version: '2.14.2'
+
+      - name: Run Compose Up
+        run: docker compose up -d
+
+      - name: Run Tests
+        run: docker compose exec backend npm test
+
+      - name: Run Compose Down
+        run: docker compose down
+
+      
+  
+    
