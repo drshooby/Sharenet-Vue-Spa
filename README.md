@@ -89,12 +89,11 @@ Sharenet Vue SPA is a responsive single-page application built with Vue.js. The 
 4. **Configure Environment Variables**
    - Create a `.env` file in the backend directory:
      ```
-     DB_HOST=localhost
-     DB_USER=root
-     DB_PASSWORD=your_password
-     DB_NAME=workshops_db
-     DB_PORT=3306
-     PORT=5000
+     MYSQL_USER=
+     MYSQL_PASSWORD=
+     MYSQL_ROOT_PASSWORD=
+     MYSQL_DATABASE=workshops_db
+     VUE_APP_GOOGLE_MAPS_API_KEY=
      ```
 
 5. **Run the Application**
