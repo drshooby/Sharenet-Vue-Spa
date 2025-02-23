@@ -13,6 +13,14 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Add Environment Variables
+        run: |
+          echo "VUE_APP_GOOGLE_MAPS_API_KEY=${{ secrets.VUE_APP_GOOGLE_MAPS_API_KEY }}"
+          echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}"
+          echo "MYSQL_USER=${{ secrets.MYSQL_USER }}"
+          echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}"
+          echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}"
+
       - name: Set up Docker
         uses: docker/setup-buildx-action@v3
 
@@ -22,12 +30,6 @@ jobs:
           version: '2.14.2'
 
       - name: Run Compose Up
-        env:
-          VUE_APP_GOOGLE_MAPS_API_KEY: ${{ secrets.VUE_APP_GOOGLE_MAPS_API_KEY }}
-          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
-          MYSQL_USER: ${{ secrets.MYSQL_USER }}
-          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
         run: docker compose up -d
 
       - name: Run Tests
