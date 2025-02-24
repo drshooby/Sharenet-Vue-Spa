@@ -4,14 +4,19 @@ const app = require("../server");
 jest.mock("mysql2", () => ({
   createPool: jest.fn().mockReturnValue({
     query: jest.fn().mockImplementation((query, values, callback) => {
-      if (query.includes("INSERT INTO bookings")) {
+      if (query.includes(`INSERT INTO \`${process.env.MYSQL_TABLE}\``)) {
         callback(null, { affectedRows: 1 }); // success simulation
       } else {
         callback(new Error("Database error"), null); // failure simulation
       }
     }),
     getConnection: jest.fn().mockImplementation((callback) => {
-      callback(null, { release: jest.fn() });
+      callback(null, { 
+        query: jest.fn().mockImplementation((query, callback) => {
+          callback(null, {}); // mock successful table creation
+        }),
+        release: jest.fn() 
+      });
     })
   })
 }));
@@ -43,9 +48,26 @@ describe("POST /api/bookings", () => {
     it("should call the database with the correct query and values", () => {
       const pool = require("mysql2").createPool();
       expect(pool.query).toHaveBeenCalledWith(
-        "INSERT INTO bookings (workshop_id, date, venue) VALUES (?, ?, ?)",
+        `INSERT INTO \`${process.env.MYSQL_TABLE}\` (workshop_id, date, venue) VALUES (?, ?, ?)`,
         [workshop.workshopId, workshop.date, workshop.venue],
         expect.any(Function)
       );
     });
-  });
+
+    // Test 3: Check handling of missing required fields
+    it("should return 400 status when required fields are missing", async () => {
+      const incompleteWorkshop = {
+        workshopId: 1,
+        // missing date and venue
+      };
+      
+      const badResponse = await request(app)
+        .post("/api/bookings")
+        .send(incompleteWorkshop);
+      
+      expect(badResponse.status).toBe(400);
+      expect(badResponse.body).toEqual({
+        error: "Missing required fields"
+      });
+    });
+});
