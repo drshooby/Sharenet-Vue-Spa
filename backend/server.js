@@ -5,7 +5,7 @@ const mysql = require("mysql2");
 require("dotenv").config();
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.BACK_PORT || 5000;
 
 // Enable CORS and JSON body parsing
 app.use(cors());
@@ -13,10 +13,10 @@ app.use(bodyParser.json());
 
 // Configure MySQL connection
 const pool = mysql.createPool({
-    host: process.env.MYSQL_HOST, // Localhost for local MySQL server
-    user: process.env.MYSQL_USER,      // Your MySQL username
-    password: process.env.MYSQL_PASSWORD, // Your MySQL password
-    database: process.env.MYSQL_DATABASE, // The database you just created
+    host: process.env.MYSQL_HOST || "mysql", // Localhost for local MySQL server
+    user: process.env.MYSQL_USER || "local",      // Your MySQL username
+    password: process.env.MYSQL_PASSWORD || "password", // Your MySQL password
+    database: process.env.MYSQL_DATABASE || "test_db", // The database you just created
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
@@ -68,7 +68,7 @@ app.post("/api/bookings", (req, res) => {
 // Start server
 if (process.env.NODE_ENV !== "test") {
     app.listen(PORT, () => {
-        console.log(`Server listening on http://localhost:${PORT}`);
+        console.log(`Server listening on port: ${PORT}`);
     });
 }
 
