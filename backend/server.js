@@ -22,13 +22,27 @@ const pool = mysql.createPool({
     queueLimit: 0
 });
 
-// Test MySQL connection
+// Test and Configure MySQL
 pool.getConnection((err, connection) => {
     if (err) {
         console.error('Error connecting to MySQL database:', err);
         return;
     }
-    console.log('Connected to MySQL database');
+
+    const createTableQuery = `
+    CREATE TABLE IF NOT EXISTS \`${process.env.MYSQL_TABLE}\` (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        workshop_id INT NOT NULL,
+        date DATE NOT NULL,
+        venue VARCHAR(255) NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );`;
+
+    connection.query(createTableQuery, (err, _) => {
+        if (err) {
+            console.error("Error creating table:", err);
+        }
+    });
     connection.release();
 });
 
@@ -40,7 +54,7 @@ app.post("/api/bookings", (req, res) => {
         return res.status(400).json({ error: "Missing required fields" });
     }
 
-    const query = "INSERT INTO bookings (workshop_id, date, venue) VALUES (?, ?, ?)";
+    const query = `INSERT INTO \`${process.env.MYSQL_TABLE}\` (workshop_id, date, venue) VALUES (?, ?, ?)`;
 
     pool.query(query, [workshopId, date, venue], (err, _) => {
         if (err) {
