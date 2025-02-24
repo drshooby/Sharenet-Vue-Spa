@@ -13,11 +13,12 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     environment:
-      MYSQL_HOST: mysql
+      MYSQL_HOST: ${MYSQL_HOST}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_TABLE: ${MYSQL_TABLE}
+      BACK_PORT: ${BACK_PORT}
     ports:
       - "5000:5000"
     depends_on:
