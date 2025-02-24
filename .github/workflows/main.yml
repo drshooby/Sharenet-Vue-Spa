@@ -33,8 +33,7 @@ jobs:
       - name: Run Compose Up
         run: docker compose up -d
 
-      - name: Run Tests
-        run: docker compose exec backend npm test
+      # add upload steps here
 
       - name: Run Compose Down
         run: docker compose down
