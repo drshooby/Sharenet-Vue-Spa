@@ -1,20 +1,25 @@
-# Use the official Node.js image as the base image
-FROM node:16-alpine
+# First Stage: Install all dependencies and build the frontend
+FROM node:16-alpine AS builder
 
-# Set the working directory inside the container
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
-# Install the dependencies
-RUN npm install
+RUN npm ci
 
-# Copy the entire frontend source code to the working directory
 COPY . .
 
-# Expose the port that the Vue.js development server runs on
+RUN npm run build
+
+# Second Stage: Create a production image
+FROM node:16-alpine
+
+WORKDIR /usr/src/app
+
+RUN npm install -g serve
+
+COPY --from=builder /usr/src/app/dist /usr/src/app/dist
+
 EXPOSE 8080
 
-# Command to start the Vue.js development server
-CMD ["npm", "run", "serve"]
+CMD ["serve", "-s", "dist", "-l", "8080"]

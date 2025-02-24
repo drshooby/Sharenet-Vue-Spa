@@ -1,19 +1,31 @@
-FROM node:16-alpine
+# First stage: Install all dependencies and run tests
+FROM node:16-alpine AS builder
 
-# Set working directory
+ENV NODE_ENV=test
+
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+RUN npm ci
 
-# Copy application files
 COPY . .
 
-# Expose the backend port
+RUN npm test
+
+# Second stage: Create a production image
+FROM node:16-alpine
+
+ENV NODE_ENV=production
+
+WORKDIR /usr/src/app
+
+COPY --from=builder /usr/src/app/package*.json ./
+
+RUN npm ci
+
+COPY --from=builder /usr/src/app .
+
 EXPOSE 5000
 
-# Start the server
 CMD ["node", "server.js"]
