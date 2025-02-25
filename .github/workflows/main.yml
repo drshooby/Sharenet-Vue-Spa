@@ -31,7 +31,7 @@ jobs:
         run: docker compose up -d
 
       - name: Run Tests
-        run: docker exec backend npm test
+        run: docker exec sharenet-vue-spa-backend-1 npm test
 
       - name: Compose Down
         run: docker compose down
