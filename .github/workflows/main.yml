@@ -27,10 +27,15 @@ jobs:
         with:
           version: '2.14.2'
 
-      - name: Run Tests in Compose
-        run: |
-          docker compose up -d
-          docker compose down
+      - name: Compose Up
+        run: docker compose up -d
+
+      - name: Run Tests
+        run: docker exec backend npm test
+
+      - name: Compose Down
+        run: docker compose down
+
 
   dispatch:
     needs: test
