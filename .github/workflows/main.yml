@@ -1,12 +1,10 @@
 name: Build and Push to ECR
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
-  build-and-push:
+  build-and-test:
     runs-on: ubuntu-24.04
 
     steps:
@@ -33,10 +31,21 @@ jobs:
       - name: Run Compose Up
         run: docker compose up -d
 
-      # add upload steps here
+      - name: Stop If Local Tests Fail
+        if: failure()
+        run: exit 1
 
       - name: Run Compose Down
         run: docker compose down
 
+  dispatch:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Send Dispatch Event
+        run: |
+          curl -X POST -H "Authorization: token ${{ secrets.PAT }}" \
+                 -H "Accept: application/vnd.github.v3+json" \
+                 https://api.github.com/repos/YOUR_INFRA_REPO_OWNER/YOUR_INFRA_REPO/dispatches \
+                 -d '{"event_type":"deploy","client_payload":{"ref":"main"}}'
   
     
