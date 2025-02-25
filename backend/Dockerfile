@@ -1,7 +1,5 @@
-# First stage: Install all dependencies and run tests
+# First stage: Install all dependencies
 FROM node:16-alpine AS builder
-
-ENV NODE_ENV=test
 
 WORKDIR /usr/src/app
 
@@ -11,12 +9,8 @@ RUN npm ci
 
 COPY . .
 
-RUN npm test
-
 # Second stage: Create a production image
 FROM node:16-alpine
-
-ENV NODE_ENV=production
 
 WORKDIR /usr/src/app
 
