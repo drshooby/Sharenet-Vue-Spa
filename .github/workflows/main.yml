@@ -1,10 +1,10 @@
-name: Build and Push to ECR
+name: Test and Dispatch
 
 on:
   workflow_dispatch:
 
 jobs:
-  build-and-test:
+  test:
     runs-on: ubuntu-24.04
 
     steps:
@@ -28,24 +28,20 @@ jobs:
         with:
           version: '2.14.2'
 
-      - name: Run Compose Up
-        run: docker compose up -d
-
-      - name: Stop If Local Tests Fail
-        if: failure()
-        run: exit 1
-
-      - name: Run Compose Down
-        run: docker compose down
+      - name: Run Tests in Compose
+        run: |
+          docker compose up -d
+          docker compose down
 
   dispatch:
+    needs: test
     runs-on: ubuntu-24.04
     steps:
       - name: Send Dispatch Event
         run: |
           curl -X POST -H "Authorization: token ${{ secrets.PAT }}" \
                  -H "Accept: application/vnd.github.v3+json" \
-                 https://api.github.com/repos/YOUR_INFRA_REPO_OWNER/YOUR_INFRA_REPO/dispatches \
+                 https://api.github.com/repos/drshooby/Sharenet-Vue-Spa-Infra/dispatches \
                  -d '{"event_type":"deploy","client_payload":{"ref":"main"}}'
   
     
