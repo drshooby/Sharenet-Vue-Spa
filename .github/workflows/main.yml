@@ -1,4 +1,4 @@
-name: Test and Dispatch
+name: Dispatch Source Code
 
 on:
   workflow_dispatch:
@@ -10,33 +10,6 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Create .env file with secrets
-        run: |
-          echo "VUE_APP_GOOGLE_MAPS_API_KEY=${{ secrets.VUE_APP_GOOGLE_MAPS_API_KEY }}" >> .env
-          echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> .env
-          echo "MYSQL_TABLE=${{ secrets.MYSQL_TABLE }}" >> .env
-          echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> .env
-          echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
-          echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
-
-      - name: Set up Docker
-        uses: docker/setup-buildx-action@v3
-
-      - name: Set up Docker Compose
-        uses: KengoTODA/actions-setup-docker-compose@v1
-        with:
-          version: '2.14.2'
-
-      - name: Compose Up
-        run: docker compose up -d
-
-      - name: Compose Down
-        run: docker compose down
-
-  dispatch:
-    needs: test
-    runs-on: ubuntu-24.04
-    steps:
       - name: Send Dispatch Event
         run: |
           curl -X POST -H "Authorization: token ${{ secrets.PAT }}" \
