@@ -8,7 +8,12 @@ const app = express();
 const PORT = process.env.BACK_PORT || 5000;
 
 // Enable CORS and JSON body parsing
-app.use(cors());
+app.use(cors({
+    origin: process.env.ALLOWED_ORIGINS.split(','),
+    methods: ['GET', 'POST'],
+    credentials: true
+}));
+
 app.use(bodyParser.json());
 
 // Configure MySQL connection

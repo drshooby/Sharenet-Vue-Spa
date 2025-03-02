@@ -5,6 +5,7 @@ services:
       dockerfile: Dockerfile
     environment:
       VUE_APP_GOOGLE_MAPS_API_KEY: ${VUE_APP_GOOGLE_MAPS_API_KEY}
+      API_URL: ${API_URL}
     ports:
       - "8080:8080"
 
@@ -19,6 +20,7 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_TABLE: ${MYSQL_TABLE}
       BACK_PORT: ${BACK_PORT}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS}
     ports:
       - "5000:5000"
     depends_on:

@@ -100,7 +100,7 @@ export default {
   methods: {
     bookWorkshop(workshop) {
       axios
-        .post("http://localhost:5000/api/bookings", {
+        .post(`${window.appConfig.apiUrl}/api/bookings`, {
           workshopId: workshop.id,
           date: workshop.date,
           venue: workshop.venue,
