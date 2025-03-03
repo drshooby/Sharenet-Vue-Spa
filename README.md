@@ -1,4 +1,4 @@
-# Sharenet Vue SPA
+# Sharenet Vue SPA (now DevOps-ified, yeah that's a word!)
 
 Sharenet Vue SPA is a responsive single-page application built with Vue.js. The project integrates a frontend, backend, and database to display spot prices, workshop details, and contact information. Users can sort data, filter available workshops, and book events. The backend is powered by Node.js, and MySQL is used for data storage.
 
