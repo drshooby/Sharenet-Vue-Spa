@@ -43,7 +43,7 @@ Sharenet Vue SPA is a responsive single-page application built with Vue.js. The 
 - **MySQL**: Relational database used to store bookings.
 
 ### **Pipeline**
-- **AWS EC2, ECR, RDS, GitHub Actions, Docker**: Automated nightly deployments.
+- **AWS EC2, ECR, RDS, Route 53, GitHub Actions, Docker**: Automated nightly deployments.
 ---
 
 ## Getting Started
