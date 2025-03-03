@@ -44,7 +44,7 @@
         <table class="table table-hover">
           <thead class="table-dark">
             <tr>
-              <th @click="sortBy('fullName')">This has been changed</th>
+              <th @click="sortBy('fullName')">FullName</th>
               <th @click="sortBy('price')">Price</th>
               <th @click="sortBy('move')">Move</th>
               <th @click="sortBy('percentageMove')">Percentage Move</th>
