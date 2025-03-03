@@ -104,7 +104,7 @@
   
   <style>
   header {
-    background: #007bff;
+    background:rgb(242, 0, 255);
     color: #fff;
     border-radius: 5px;
   }
