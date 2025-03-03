@@ -104,13 +104,13 @@
   
   <style>
   header {
-    background:rgb(242, 0, 255);
+    background: #007bff;
     color: #fff;
     border-radius: 5px;
   }
   
   .table-hover tbody tr:hover {
-    background-color: rgba(0, 123, 255, 0.1);
+    background-color: rgba(223, 25, 204, 0.9);
   }
   
   .nav-link.active {
