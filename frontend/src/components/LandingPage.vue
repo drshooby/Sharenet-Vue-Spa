@@ -44,7 +44,7 @@
         <table class="table table-hover">
           <thead class="table-dark">
             <tr>
-              <th @click="sortBy('fullName')">FullName</th>
+              <th @click="sortBy('fullName')">This has been changed</th>
               <th @click="sortBy('price')">Price</th>
               <th @click="sortBy('move')">Move</th>
               <th @click="sortBy('percentageMove')">Percentage Move</th>
@@ -110,7 +110,7 @@
   }
   
   .table-hover tbody tr:hover {
-    background-color: rgba(223, 25, 204, 0.9);
+    background-color: rgba(0, 123, 255, 0.1);
   }
   
   .nav-link.active {
