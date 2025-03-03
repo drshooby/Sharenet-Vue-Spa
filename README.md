@@ -4,9 +4,9 @@ Sharenet Vue SPA is a responsive single-page application built with Vue.js. The 
 
 ---
 
-## Checkout the Other Repos!
-<a href="https://github.com/drshooby/Sharenet-Vue-Spa">Infrastructure<a>  
-<a href="https://github.com/MuneerMiller/Sharenet-Vue-Spa">Original source by MuneerMiller<a>
+## Check Out the Other Repos!
+- <a href="https://github.com/drshooby/Sharenet-Vue-Spa">Infrastructure<a>  
+- <a href="https://github.com/MuneerMiller/Sharenet-Vue-Spa">Original source by MuneerMiller<a>
 
 ## Features
 
