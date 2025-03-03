@@ -14,7 +14,7 @@ Sharenet Vue SPA is a responsive single-page application built with Vue.js. The 
 
 ### 2. **Contact Us Page**
 - Shows Sharenet's contact details, including address and phone number.
-- Integrates Google Maps to display Sharenet's location.
+- ~~Integrates Google Maps to display Sharenet's location.~~ (API key expired)
 - Includes navigation links to other pages.
 
 ### 3. **Workshops Page**
@@ -42,6 +42,8 @@ Sharenet Vue SPA is a responsive single-page application built with Vue.js. The 
 ### **Database**
 - **MySQL**: Relational database used to store bookings.
 
+### **Pipeline**
+- **AWS EC2, ECR, RDS, GitHub Actions, Docker**: Automated nightly deployments.
 ---
 
 ## Getting Started
@@ -61,51 +63,10 @@ Sharenet Vue SPA is a responsive single-page application built with Vue.js. The 
    cd sharenet-vue-spa
    ```
 
-2. **Install Dependencies**
+2. **Docker Container**
    ```bash
-   # Install frontend dependencies
-   npm install
-
-   # Install backend dependencies
-   cd backend
-   npm install
+   docker compose up
    ```
-
-3. **Set Up the Database**
-   - Start your MySQL server and create a database:
-     ```sql
-     CREATE DATABASE workshops_db;
-     USE workshops_db;
-
-     CREATE TABLE bookings (
-         id INT AUTO_INCREMENT PRIMARY KEY,
-         workshop_id INT NOT NULL,
-         date DATE NOT NULL,
-         venue VARCHAR(255) NOT NULL,
-         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-     );
-     ```
-
-4. **Configure Environment Variables**
-   - Create a `.env` file in the backend directory:
-     ```
-     MYSQL_USER=
-     MYSQL_PASSWORD=
-     MYSQL_ROOT_PASSWORD=
-     MYSQL_DATABASE=workshops_db
-     VUE_APP_GOOGLE_MAPS_API_KEY=
-     ```
-
-5. **Run the Application**
-   - **Backend**:
-     ```bash
-     cd backend
-     node server.js
-     ```
-   - **Frontend**:
-     ```bash
-     npm run serve
-     ```
 
 6. Open your browser and navigate to:
    - Frontend: `http://localhost:8080`
@@ -120,27 +81,13 @@ Sharenet Vue SPA is a responsive single-page application built with Vue.js. The 
   - Refresh data with a button click.
 
 - **Contact Us Page**:
-  - View Sharenet’s contact details and location on Google Maps.
+  - View Sharenet’s contact details ~~and location on Google Maps~~.
 
 - **Workshops Page**:
   - Filter workshops by availability.
   - Book available workshops and store bookings in the database.
 
 ---
-
-## Running with Docker
-1. Ensure Docker is Installed
-Make sure you have Docker and Docker Compose installed.
-
-2. Build and Run the Containers
-Run the following command in the root directory (where docker-compose.yml is located):
-
-```
-docker-compose up --build
-```
-3. Access the Application
-Frontend: http://localhost:8080
-Backend: http://localhost:5000
 
 ## Folder Structure
 
